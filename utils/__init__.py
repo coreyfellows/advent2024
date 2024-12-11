@@ -1,6 +1,6 @@
 
 from itertools import chain
-from typing import Generic, Callable
+from typing import Generic, Callable, List
 from collections.abc import Iterable
 
 T = TypeVar("T", bound=Callable[[str]])
@@ -15,7 +15,7 @@ class Grid(Generic[T]):
             for ch in line:
                 ln.append(cls(ch))
 
-        self.grid = grid
+        self.grid: List[List[T]] = grid
         self.width = len(grid)
         self.height = len(grid[0])
     
