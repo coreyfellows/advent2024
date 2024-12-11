@@ -14,12 +14,13 @@ def load_input(filename):
 def traverse(grid: utils.Grid, x: int, y: int, peaks: list=None):
     if peaks is None:
         peaks = []
-    level = grid.get(x,y)
+    level = grid[x,y]
     if level == 9:
         peaks.append((x,y))
         return
-    for _, next_x, next_y in filter(lambda cell: cell[0] == level+1, grid.cardinal_neighbors(x,y)):
-        traverse(grid, next_x, next_y, peaks)
+    for next_level, next_x, next_y in grid.cardinal_neighbors(x,y):
+        if next_level is level+1:
+            traverse(grid, next_x, next_y, peaks)
     return peaks
 
 def solution_1(grid):

@@ -20,8 +20,9 @@ class Grid:
         self.grid = grid
         self.width = len(grid)
         self.height = len(grid[0])
-        
-    def get(self, x, y):
+    
+    def __getitem__(self, coords):
+        x,y=coords
         if x < 0 or x >= self.width:
             return None
         if y < 0 or y >= self.height:
@@ -31,18 +32,21 @@ class Grid:
     def __iter__(self):
         for y in range(self.height):
             for x in range(self.width):
-                yield self.get(y,x), y, x
+                yield self[y,x], y, x
 
-    def render(self):
+    def __str__(self):
+        lines = []
         for y in range(self.height):
+            line = []
             for x in range(self.width):
-                print(self.get(x,y), end="")
-            print("")
+                line.append(str(self[x,y]))
+            lines.append("".join(line))
+        return "\n".join(lines)
 
-    def select_neighbors(self, x, y, deltas):
-        for dx, dy in deltas:
-            if self.get(x+dx, y+dy):
-                yield self.get(x+dx, y+dy), x+dx, y+dy
+    def select_neighbors(self, x, y, relative_positions):
+        for dx, dy in relative_positions:
+            if self[x+dx, y+dy]:
+                yield self[x+dx, y+dy], x+dx, y+dy
 
     def cardinal_neighbors(self, x, y):
         return self.select_neighbors(x,y, [(1,0), (0,1), (-1,0), (0,-1)])
