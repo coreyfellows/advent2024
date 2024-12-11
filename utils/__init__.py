@@ -1,4 +1,6 @@
 
+from itertools import chain
+
 class Grid:
     def copy(self):
         grid = []
@@ -36,3 +38,17 @@ class Grid:
             for x in range(self.width):
                 print(self.get(x,y), end="")
             print("")
+
+    def select_neighbors(self, x, y, deltas):
+        for dx, dy in deltas:
+            if self.get(x+dx, y+dy):
+                yield self.get(x+dx, y+dy), x+dx, y+dy
+
+    def cardinal_neighbors(self, x, y):
+        return self.select_neighbors(x,y, [(1,0), (0,1), (-1,0), (0,-1)])
+    
+    def diagonal_neighbors(self, x, y):
+        return self.neighbors(x,y, [(1,1), (-1,-1), (-1,1), (1,-1)])
+    
+    def neighbors(self, x ,y):
+        return chain(self.cardinal_neighbors(x,y), self.diagonal_neighbors(x,y))
