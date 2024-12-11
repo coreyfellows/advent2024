@@ -52,7 +52,7 @@ class Grid:
         return self.select_neighbors(x,y, [(1,0), (0,1), (-1,0), (0,-1)])
     
     def diagonal_neighbors(self, x, y):
-        return self.neighbors(x,y, [(1,1), (-1,-1), (-1,1), (1,-1)])
+        return self.select_neighbors(x,y, [(1,1), (-1,-1), (-1,1), (1,-1)])
     
     def neighbors(self, x ,y):
         return chain(self.cardinal_neighbors(x,y), self.diagonal_neighbors(x,y))
