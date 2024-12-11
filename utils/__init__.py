@@ -27,7 +27,7 @@ class Grid(Generic[T]):
             return None
         return self.grid[y][x]
     
-    def __iter__(self) -> Iterable[tuple[T, int, int]:
+    def __iter__(self) -> Iterable[tuple[T, int, int]]:
         for y in range(self.height):
             for x in range(self.width):
                 yield self[y,x], y, x
@@ -41,15 +41,15 @@ class Grid(Generic[T]):
             lines.append("".join(line))
         return "\n".join(lines)
 
-    def select_neighbors(self, x, y, relative_positions) -> Iterable[tuple[T, int, int]:
+    def select_neighbors(self, x, y, relative_positions) -> Iterable[tuple[T, int, int]]:
         for dx, dy in relative_positions:
             if self[x+dx, y+dy]:
                 yield self[x+dx, y+dy], x+dx, y+dy
 
-    def cardinal_neighbors(self, x, y) -> Iterable[tuple[T, int, int]:
+    def cardinal_neighbors(self, x, y) -> Iterable[tuple[T, int, int]]:
         return self.select_neighbors(x,y, [(1,0), (0,1), (-1,0), (0,-1)])
     
-    def diagonal_neighbors(self, x, y) -> Iterable[tuple[T, int, int]:
+    def diagonal_neighbors(self, x, y) -> Iterable[tuple[T, int, int]]:
         return self.select_neighbors(x,y, [(1,1), (-1,-1), (-1,1), (1,-1)])
     
     def neighbors(self, x ,y) -> Iterable[tuple[T, int, int]:
